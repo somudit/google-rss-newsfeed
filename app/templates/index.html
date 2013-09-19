@@ -1,0 +1,27 @@
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
+    window.onload=function (){
+    $("#searcher").submit(function(ev) {
+
+        /* stop form from submitting normally */
+
+        ev.preventDefault();
+
+
+
+        $.post("/searchRSS", $("#searcher").serialize(),function(o){console.log(o);document.getElementById("result").innerHTML=o;});
+    })};
+</script>
+<form id="searcher" method="post" action="#">
+<input type="text" id="query" name="query" required/>
+<input type="submit" value="Get Feed"/>
+</form>
+<div id="result">
+    <table>
+        {% for row in posts %}
+        <tr><td><b>Title : </b>{{ row.title }}</td></tr>
+        <tr><td><b>Date : </b>{{ row.date }}</td></tr>
+        <tr><td><b>Description : </b>{{ row.description }}</td></tr>
+        {% endfor %}
+    </table>
+</div>
